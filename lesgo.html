@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles2.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        body {
+            background-image: url('larocaxd.jpg'); /* Fondo de "larocaxd.jpg" */
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+
+        #datepicker {
+            position: absolute;
+            top: 500px;
+            margin-bottom: 20px;
+        }
+
+        .container-mental {
+            padding: 10px;
+            border-radius: 10px;
+            background-color: white;
+            position: relative;
+            top: 590px;
+            text-align: center;
+        }
+
+        #mental-baggage {
+            color: black;
+            font-size: 25px;
+            margin: 0;
+        }
+
+    </style>
+    <title>Adivina la fecha</title>
+</head>
+<body>
+
+    <input type="text" id="datepicker" placeholder="Selecciona la fecha...">
+    <div class="container-mental">
+        <p id="mental-baggage">¿En qué fecha decidiste estar con el amor de tu vida?</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#datepicker').datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+
+            $('#datepicker').click(function() {
+                $('#datepicker').datepicker('show');
+            });
+
+            $('#datepicker').change(function() {
+                var selectedDate = $('#datepicker').datepicker('getDate');
+                var targetDate = new Date(2023, 10, 10); // 10 de noviembre de 2023
+
+                if (selectedDate.getTime() === targetDate.getTime()) {
+                    window.location.href = "index3.html"; // Redirige a la página de éxito si la fecha es correcta
+                } else {
+                    window.location.href = "lesgo.html"; // Redirige a la página principal si la fecha es incorrecta
+                }
+            });
+        });
+    </script>
+</body>
+</html>
