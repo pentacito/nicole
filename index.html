@@ -73,22 +73,17 @@
     var areaHeight = 300;
     var areaLeft = $('#yes').offset().left - (areaWidth - buttonWidth) / 2;
     var areaTop = $('#yes').offset().top - (areaHeight - buttonHeight) / 2;
-    var isAnimating = false; // Bandera para controlar si se está animando el botón
+    var animationDuration = 500; // Duración inicial de la animación
+    var intervalDuration = 1000; // Duración inicial del intervalo
 
     function moveButton() {
-        // Verificar si se está animando el botón
-        if (!isAnimating) {
-            isAnimating = true; // Establecer la bandera a true para indicar que se está animando
-            var topPos = areaTop + Math.random() * (areaHeight - buttonHeight);
-            var leftPos = areaLeft + Math.random() * (areaWidth - buttonWidth);
-            
-            $('#no').animate({
-                'top': topPos,
-                'left': leftPos
-            }, 250, function() {
-                isAnimating = false; // Establecer la bandera a false cuando la animación haya terminado
-            });
-        }
+        var topPos = areaTop + Math.random() * (areaHeight - buttonHeight);
+        var leftPos = areaLeft + Math.random() * (areaWidth - buttonWidth);
+        
+        $('#no').animate({
+            'top': topPos,
+            'left': leftPos
+        }, animationDuration);
     }
 
     function instantMove() {
@@ -103,12 +98,22 @@
     
     moveButton(); // Mover el botón inicialmente
     
-    setInterval(function() {
+    var moveButtonInterval = setInterval(function() {
         moveButton();
-    }, 500); // Cambia la posición del botón cada 2 segundos
+    }, intervalDuration); // Cambia la posición del botón cada 2 segundos
 
     $('#no').click(function() {
         instantMove(); // Cambiar la posición instantáneamente cuando se hace clic
+        if (animationDuration > 100) {
+            animationDuration -= 100; // Reducir la duración de la animación en 100 ms
+        }
+        if (intervalDuration === 1000 && animationDuration === 100) {
+            intervalDuration -= 600; // Reducir la duración del intervalo en 600 ms
+        } else if (intervalDuration > 400) {
+            intervalDuration -= 200; // Reducir la duración del intervalo en 200 ms
+            clearInterval(moveButtonInterval); // Limpiar el intervalo anterior
+            moveButtonInterval = setInterval(moveButton, intervalDuration); // Establecer un nuevo intervalo
+        }
     });
 });
 
